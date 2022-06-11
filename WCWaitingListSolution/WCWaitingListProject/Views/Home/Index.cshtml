@@ -1,0 +1,82 @@
+@model IEnumerable<WCWaitingListProject.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Home";
+    Layout = "_Layout";
+    int count = 0;
+}
+
+<div style="margin-left: 10px">
+<h1>Administrative View</h1>
+
+<p></p>
+
+<form asp-controller="Home" asp-action="Index" method="get">
+    <p>
+        Start Date: <input type="date" name="startDate" />
+
+        End Date: <input type="date" name="endDate" />
+
+        Appointment Status: <select name="FilterAppointmentStatus">
+            <option value="all">All</option>
+            <option value="request">No Appointment Made</option>
+            <option value="made">Appointment Made</option>
+        </select>
+        <input class="btn btn-primary" type="submit" value="Filter" />
+    </p>
+</form>
+<p>
+    <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Register">Register a new account</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Limits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentMade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            count += 1;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Limits)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppointmentMade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+        <tr style="font-size: 10pt">Total: @count</tr>
+    </tbody>
+</table>
+</div>
+
